@@ -1,0 +1,93 @@
+:root {
+    --light-grey: #E6EAEE;
+    --dark-grey: #30363A;
+    --neds-orange: #F55D05;
+    --dark-blue: #0B1728;
+    --race-blue: #2463EB;
+    --dark-text: #0C1728;
+    --urgent-text: #D32123;
+}
+
+@mixin desktop {
+    @media (min-width: 991px) {
+      @content;
+    }
+}
+
+.global {
+    &__title-text {
+        &-large {
+            font-size: clamp(3.5rem, 2.5898rem + 3.8835vw, 7.25rem);
+            text-transform: uppercase;
+            margin: 0;
+            padding: 0;
+            color: var(--knobby-black);
+        }
+        &-medium {
+            font-size: clamp(2.5rem, 1.7353rem + 3.1373vw, 5.5rem);
+            text-transform: uppercase;
+            margin: 0;
+            padding: 0;
+            color: var(--knobby-black);
+        }
+        &-small {
+            font-size: clamp(1.25rem, 1.0588rem + 0.7843vw, 2rem);
+            text-transform: none;
+            font-weight: 500;
+            margin: 0;
+            line-height: 1.5;
+            padding: 0;
+            color: var(--knobby-black);
+        }
+    }
+    &__body-text {
+        &-xlarge {
+            font-size: clamp(2.5rem, 0.8999rem + 2.5834vw, 4rem);
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            color: var(--knobby-black);
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+        &-large {
+            font-size: clamp(1.25rem, 0.4499rem + 1.2917vw, 2rem);
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            color: var(--knobby-black);
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+        &-medium {
+            font-size: clamp(1rem, 0.8725rem + 0.5229vw, 1.5rem);
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            color: var(--knobby-black);
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+        &-small {
+            font-size: clamp(0.75rem, 0.5588rem + 0.7843vw, 1.5rem);
+            margin: 0;
+            line-height: 1.5;
+            padding: 0;
+            color: var(--knobby-black);
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+        &-xsmall {
+            font-size: clamp(0.75rem, 0.6893rem + 0.2589vw, 1rem);
+            margin: 0;
+            line-height: 1.5;
+            padding: 0;
+            color: var(--knobby-black);
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+        &-bold {
+            font-weight: 500;
+        }
+    }
+}
