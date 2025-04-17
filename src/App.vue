@@ -14,7 +14,6 @@
 
   watch(remainingRaces, (updatedRacesLength) => {
     if(updatedRacesLength >= 10 || racesLoading.value) return;
-    console.log('running')
     getRaces();
   }
 );

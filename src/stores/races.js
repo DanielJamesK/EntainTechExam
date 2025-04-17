@@ -43,11 +43,14 @@ export const useRacesStore = defineStore('races', () => {
         
         return nextToJumpRaces.next_to_go_ids
             .map(id => nextToJumpRaces.race_summaries[id])
-            .filter(({ category_id }) => activeIds.includes(category_id));
+            .filter(({ category_id }) => activeIds.includes(category_id))
+            .sort((raceA, raceB) => raceA.advertised_start.seconds - raceB.advertised_start.seconds);
     });
 
     const unfilteredRaces = computed(() => {
-        return nextToJumpRaces.next_to_go_ids.map(id => nextToJumpRaces.race_summaries[id]);
+        return nextToJumpRaces.next_to_go_ids
+        .map(id => nextToJumpRaces.race_summaries[id])
+        .sort((raceA, raceB) => raceA.advertised_start.seconds - raceB.advertised_start.seconds);
     });
 
     const updateRaceFilter = (categoryId) => {
