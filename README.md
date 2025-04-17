@@ -8,7 +8,7 @@ I think a better approach would be to emit the raceId from the CountdownTimer of
 
 Just a final note, from what I could see, next_to_go_races are already coming through in ascending order. I am explicitly sorting the races by shortest `advertised_start.seconds`, but this may be redundant.
 
-## 🚀 Getting Started
+## Getting Started
 ### Start by installing the required depenedencies.
 ```bash
     npm install
@@ -31,7 +31,7 @@ Just a final note, from what I could see, next_to_go_races are already coming th
 - If fewer than 5 races match the active filters, additional races are pulled from the unfiltered list.
 - Races are sorted by `advertised_start.seconds` (ascending).
 
-### ⏱ Countdown Logic
+### Countdown Logic
 - Each race has a countdown (managed by `CountdownTimer.vue`).
 - When a race is **over 60 seconds past** its start time, it is removed by calling `removeRace()`.
 
@@ -62,6 +62,6 @@ The Pinia store manages:
 
 Tests cover:
 
-- ✅ `NextToGoRaces` renders up to 5 races
-- ✅ Expired races are filtered out after they have gone 1 minute past their start time
-- ✅ Filtering logic works with various combinations of active categories
+- `NextToGoRaces` renders up to 5 races
+- Expired races are filtered out after they have gone 1 minute past their start time
+- Filtering logic works with various combinations of active categories
