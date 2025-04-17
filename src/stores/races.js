@@ -5,7 +5,9 @@ import harness from '@/assets/images/harness.png';
 import thoroughbred from '@/assets/images/thoroughbred.png';
 
 export const useRacesStore = defineStore('races', () => {
-    const nextToJumpRaces = ref({ next_to_go_ids: [], race_summaries: {} });
+    const next_to_go_ids = ref([]);
+    const race_summaries = reactive({});
+    const nextToJumpRaces = reactive({ next_to_go_ids, race_summaries });
     const racesLoading = ref(true);
     const raceFilterOptions = reactive([
         {
@@ -39,9 +41,13 @@ export const useRacesStore = defineStore('races', () => {
             .filter(({ active }) => active)
             .map(({ id }) => id);
         
-        return nextToJumpRaces.value.next_to_go_ids
-            .map(id => nextToJumpRaces.value.race_summaries[id])
+        return nextToJumpRaces.next_to_go_ids
+            .map(id => nextToJumpRaces.race_summaries[id])
             .filter(({ category_id }) => activeIds.includes(category_id));
+    });
+
+    const unfilteredRaces = computed(() => {
+        return nextToJumpRaces.next_to_go_ids.map(id => nextToJumpRaces.race_summaries[id]);
     });
 
     const updateRaceFilter = (categoryId) => {
@@ -59,13 +65,33 @@ export const useRacesStore = defineStore('races', () => {
         }
     };
 
-    const getRaces = async () => {
-        const response = await fetch('https://api.neds.com.au/rest/v1/racing/?method=nextraces&count=20');
+    const removeRace = (raceId) => {
+        try {
+            if(!nextToJumpRaces.next_to_go_ids.includes(raceId)) throw new Error('Race not found. Failed to remove.');
+            return nextToJumpRaces.next_to_go_ids = nextToJumpRaces.next_to_go_ids.filter( id => id !== raceId );
+        }
+        catch(err){
+            console.error(err);
+            return false;
+        }
+    };
 
-        const result = await response.json();
-        nextToJumpRaces.value = result.data;
-        return racesLoading.value = false;
+    const getRaces = async () => {
+        racesLoading.value = true;
+        try {
+            const response = await fetch('https://api.neds.com.au/rest/v1/racing/?method=nextraces&count=20');
+            if(response?.status !== 200) throw new Error('Error fetching recent races from server');
+            const { data } = await response.json();
+            const { next_to_go_ids, race_summaries } = data;
+            racesLoading.value = false;
+            nextToJumpRaces.next_to_go_ids = next_to_go_ids;
+            return nextToJumpRaces.race_summaries = race_summaries;
+        }
+        catch(err) {
+            console.error(err);
+            return racesLoading.value = false;
+        }
     }
 
-    return { filteredRaces, getRaces, racesLoading, raceFilterOptions, updateRaceFilter };
+    return { filteredRaces, getRaces, racesLoading, raceFilterOptions, updateRaceFilter, removeRace, nextToJumpRaces, unfilteredRaces };
 })

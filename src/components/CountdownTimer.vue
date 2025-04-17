@@ -5,8 +5,10 @@
 <script setup>
     import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
   
-    const { seconds } = defineProps({
-        seconds: { required: true, type: Number }
+    const { seconds, removeRace, raceId } = defineProps({
+        seconds: { required: true, type: Number },
+        raceId: { required: true, type: String },
+        removeRace: { required: true, type: Function }
     });
   
     const raceTime = new Date(seconds * 1000);
@@ -16,6 +18,10 @@
 
     const updateTimeToStart = () => {
         timeToStart.value = raceTime - new Date();
+        if(timeToStart.value < (-60 * 1000)){
+            clearInterval(interval);
+            removeRace(raceId);
+        }
     };
   
     const countdownTime = computed(() => {
