@@ -2,9 +2,9 @@
 This app displays a live feed of upcoming races across Greyhound, Harness, and Thoroughbred categories. Users can filter by category, view race countdowns, and expired races are automatically removed after they have gone 1 minute past their start time. Once there are less than 10 races available, a new request to the API is made to get more upcoming races.
 
 ## Post build reflection
-I'm quite happy with how to build turned out. The app is functioning as I intended and it was good fun to build. I think one of the areas that can use refinement would be how I am handling the removal of the races after they have expired. I am handling the removal of the race from within each races CountdownTimer component. I don't like how I am drilling the props down multiple levels, App > NextToGoRaces > RaceCard > CountdownTimer. I also didn't want to query the inside every CountdownTimer to access the removeRace action.
+I'm quite happy with how the build turned out. The app is functioning as I intended and it was good fun to build. I think one of the areas that can use refinement would be how I am handling the removal of the races after they have expired. I am handling the removal of the race from within each races CountdownTimer component. I don't like how I am drilling the props down multiple levels, App > NextToGoRaces > RaceCard > CountdownTimer. I also didn't want to query the store inside every CountdownTimer to access the removeRace action.
 
-I think a better approach would be to emit the raceId from the CountdownTimer of the race that has expired, to to the App, and handle the removal there. That would be a future refactor that I would look into, would love to get your opinion! Hope you enjoy playing around with the app.
+I think a better approach would be to emit the raceId from the CountdownTimer for the race that has expired, to the App, and handle the removal there. That would be a future refactor that I would look into, would love to get your opinion! Hope you enjoy playing around with the app.
 
 Just a final note, from what I could see, next_to_go_races are already coming through in ascending order. I am explicitly sorting the races by shortest `advertised_start.seconds`, but this may be redundant.
 
